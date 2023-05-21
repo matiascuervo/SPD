@@ -18,3 +18,6 @@ Parcial 1 Sistema de Procesamiento de Datos/MATIAS CUERVO -1B
 
 # Codigo Fuente
 https://onlinegdb.com/fVfVxp6xg
+
+# Link Tinkercad
+https://www.tinkercad.com/things/5dPLfB4GVLU-parcial-1-sistema-de-procesamiento-de-datosmatias-cuervo-1b/editel?sharecode=ysDfynXlzeeFXNmR6bpO14WQ9hcSfNS7-Ayt-w6Zbe0
