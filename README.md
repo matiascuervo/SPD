@@ -19,8 +19,25 @@ Parcial 1 Sistema de Procesamiento de Datos/MATIAS CUERVO -1B
 # Funcionamiento integral del proyecto  montacargas
 El proyecto del  montacargas consiste en un sistema que permite Subir ,Bajar y o Pausar el montacargas entre diferentes pisos utilizando botones de control. A continuación, se explica el funcionamiento paso a paso:
 * Configuración inicial: En la sección de configuración del código, se definen las conexiones de los componentes, como los pines para los LED y los botones. Además, se inicializan los estados iniciales de variables necesarias para el funcionamiento .
-* Bucle principal: El programa entra en un bucle principal llamado loop(), que se ejecuta continuamente mientras el Arduino está encendido.
-
+* <pre lang="cpp">
+#define SEG_A 2
+#define SEG_B 3
+#define SEG_C 4
+#define SEG_D 5
+#define SEG_E 6
+#define SEG_F 7
+#define SEG_G 8
+#define LED_ROJO 13
+#define LED_VERDE 12
+#define BOTON_SUBIR 11
+#define BOTON_DETENER 10
+#define BOTON_BAJAR 9
+int pisoActual = 0;// 0: Planta baja, 1: Primer piso, 2: Segundo piso
+bool enMovimiento = false;
+unsigned long tiempoInicio = 0;    
+unsigned long tiempoTranscurrido = 0;
+</pre>
+* Definimos el setup de los componentes 
 <pre lang="cpp">
 void setup()
 {
