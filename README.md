@@ -113,6 +113,41 @@ void subir_piso()
 }
 </pre>
 
+* Bajar piso: A continuación, se llama a la función bajar_piso(). Esta función verifica si se ha presionado el botón de bajar piso y si el montacargas no está en movimiento y el piso actual es mayor a 0. Si se cumplen estas condiciones, se realiza lo siguiente:
+
+Se decrementa el número del piso actual en 1.
+Se marca el montacargas como en movimiento.
+Se guarda el tiempo de inicio del movimiento.
+Se establece el tiempo transcurrido para el trayecto entre pisos (3000 ms).
+Se enciende el LED verde y se apaga el LED rojo.
+Se muestra en el monitor serial el mensaje "Bajando al piso [piso]".
+Se actualiza el último tiempo de lectura.
+<pre lang="cpp">
+void bajar_piso()
+{ 
+  static unsigned long ultimoTiempo = 0;
+  const unsigned long tiempo_anti_rebote_bajada = 50; // Tiempo de antirrebote en milisegundos
+
+  if (millis() - ultimoTiempo < tiempo_anti_rebote_bajada)
+  {
+    // Ignorar lecturas durante el tiempo de antirrebote
+    return;
+  }
+  if (digitalRead(BOTON_BAJAR) == HIGH && !enMovimiento && pisoActual > 0)
+  {
+    pisoActual--;
+    enMovimiento = true;
+    tiempoInicio = millis();
+    tiempoTranscurrido = 3000; // Tiempo de trayecto entre pisos (3000 ms)
+    digitalWrite(LED_VERDE, HIGH); // Encender LED verde
+    digitalWrite(LED_ROJO, LOW); // Apagar LED rojo
+    Serial.print("Bajando al piso ");
+    Serial.println(pisoActual);
+    ultimoTiempo = millis();
+  }
+  </pre>
+
+
 # Codigo Fuente
 https://onlinegdb.com/fVfVxp6xg
 
