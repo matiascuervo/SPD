@@ -122,8 +122,9 @@ Se establece el tiempo transcurrido para el trayecto entre pisos (3000 ms).
 Se enciende el LED verde y se apaga el LED rojo.
 Se muestra en el monitor serial el mensaje "Bajando al piso [piso]".
 Se actualiza el último tiempo de lectura.
+tambien se establese un segundo if donde se cumple la condición if (enMovimiento && millis() - tiempoInicio >= tiempoTranscurrido), se ejecutará el bloque de código, lo cual apagará el LED verde, encenderá el LED rojo y mostrará el mensaje "Montacargas llegó al piso X"
 <pre lang="cpp">
-void bajar_piso()
+ void bajar_piso()
 { 
   static unsigned long ultimoTiempo = 0;
   const unsigned long tiempo_anti_rebote_bajada = 50; // Tiempo de antirrebote en milisegundos
@@ -145,9 +146,73 @@ void bajar_piso()
     Serial.println(pisoActual);
     ultimoTiempo = millis();
   }
+  if (enMovimiento && millis() - tiempoInicio >= tiempoTranscurrido)
+{
+  enMovimiento = false;
+  digitalWrite(LED_VERDE, LOW);  // Apagar LED verde
+  digitalWrite(LED_ROJO, HIGH);  // Encender LED rojo
+  Serial.print("Montacargas llego al piso ");
+  Serial.println(pisoActual);
+  }
+  
+}
   </pre>
+* Detener montacargas
+Esta función verifica si se ha presionado el botón de detener montacargas. Si se cumple esta condición, se realiza lo siguiente:
+Se marca el montacargas como no en movimiento.
+Se apaga el LED verde y se enciende el LED rojo.
+Se muestra en el monitor serial el mensaje "Montacargas detenido".
+Se actualiza el último tiempo de lectura.
+Actualizar display: Después de verificar las acciones de subir, bajar o detener el montacargas, se llama a la función actualizarDisplay(pisoActual). Esta función se encarga de mostrar en el display el número correspondiente al piso actual.
 
+Control del tiempo de trayecto: Finalmente, se realiza una verificación para detener el montacargas si ha transcurrido el tiempo de trayecto establecido. Si el tiempo transcurrido desde el inicio del movimiento es mayor o igual al tiempo de trayecto, se ejecuta la función detenerMontacargas() para detener el montacargas.
 
+El programa continúa en este bucle principal, repitiendo los pasos anteriores y verificando constantemente los botones y el tiempo transcurrido para controlar el movimiento del montacargas y mostrar la información adecuada en el display y el monitor serial.
+<pre lang="cpp">
+void detenerMontacargas()
+{
+ static unsigned long ultimoTiempo = 0;
+  const unsigned long tiempo_anti_rebote_detener = 50; // Tiempo de antirrebote en milisegundos
+
+  if (millis() - ultimoTiempo < tiempo_anti_rebote_detener)
+  {
+    // Ignorar lecturas durante el tiempo de antirrebote
+    return;
+  }
+
+  if (digitalRead(BOTON_DETENER) == HIGH)
+  {
+    enMovimiento = false;
+    digitalWrite(LED_VERDE, LOW);  // Apagar LED verde
+    digitalWrite(LED_ROJO, HIGH);  // Encender LED rojo
+    Serial.println("Montacargas detenido");
+    ultimoTiempo = millis();  // Actualizar el último tiempo de lectura
+  }
+}	
+</pre>
+
+* actualizarDisplay:
+Por último, se llama a la función actualizarDisplay() para mostrar en la pantalla de 7 segmentos el número del piso actual.
+<pre lang="cpp">
+void actualizarDisplay(int numero)
+{
+  // Definir patrones para cada dígito
+  const byte patronesDigitos[4] = {
+    B00111111, // 0
+    B00000110, // 1
+    B01011011, // 2
+    B01001111  // 3
+  };
+
+  digitalWrite(SEG_A, bitRead(patronesDigitos[numero], 0));
+  digitalWrite(SEG_B, bitRead(patronesDigitos[numero], 1));
+  digitalWrite(SEG_C, bitRead(patronesDigitos[numero], 2));
+  digitalWrite(SEG_D, bitRead(patronesDigitos[numero], 3));
+  digitalWrite(SEG_E, bitRead(patronesDigitos[numero], 4));
+  digitalWrite(SEG_F, bitRead(patronesDigitos[numero], 5));
+  digitalWrite(SEG_G, bitRead(patronesDigitos[numero], 6));
+}
+</pre>
 # Codigo Fuente
 https://onlinegdb.com/fVfVxp6xg
 
