@@ -58,6 +58,23 @@ void setup()
 }
 </pre>
 
+# Bucle principal
+El programa entra en un bucle principal llamado loop(), que se ejecuta continuamente mientras el Arduino está encendido.
+<pre lang="cpp">
+void loop()
+{
+  subir_piso();
+  bajar_piso();
+  detenerMontacargas();
+  actualizarDisplay(pisoActual);
+  
+  if (millis() - tiempoInicio >= tiempoTranscurrido)
+  {
+    detenerMontacargas();
+  }
+  
+}
+</pre>
 # Codigo Fuente
 https://onlinegdb.com/fVfVxp6xg
 
