@@ -58,7 +58,7 @@ void setup()
 }
 </pre>
 
-# Bucle principal
+* Bucle principal
 El Programa Entra En Un Bucle Principal Llamado loop(), Que Se Ejecuta Continuamente Mientras El Arduino Está Encendido.
 En Ella Llamamos a Las Funciones Que Utiliza El Proyecto.
 <pre lang="cpp">
@@ -76,6 +76,43 @@ void loop()
   
 }
 </pre>
+* Subir piso:En el bucle principal, se llama a la función subir_piso(). Esta función se encarga de verificar si se ha presionado el botón de subir piso y si el montacargas no está en movimiento y el piso actual es menor a 3. Si se cumplen estas condiciones, se realiza lo siguiente:
+
+Se incrementa el número del piso actual en 1.
+Se marca el montacargas como en movimiento.
+Se guarda el tiempo de inicio del movimiento.
+Se establece el tiempo transcurrido para el trayecto entre pisos (3000 ms).
+Se enciende el LED verde y se apaga el LED rojo.
+Se muestra en el monitor serial el mensaje "Subiendo al piso [piso]".
+Se actualiza el último tiempo de lectura.
+<pre lang="cpp">
+void subir_piso()
+{
+  static unsigned long ultimoTiempo = 0;
+  const unsigned long tiempo_anti_rebote = 50; 
+
+  if (millis() - ultimoTiempo < tiempo_anti_rebote)
+  {
+    // Ignorar lecturas durante el tiempo de antirrebote
+    return;
+  }
+
+  if (digitalRead(BOTON_SUBIR) == HIGH && !enMovimiento && pisoActual < 3)
+  {
+    pisoActual++;
+    enMovimiento = true;
+    tiempoInicio = millis();
+    tiempoTranscurrido = 3000; // Tiempo de trayecto entre pisos (3000 ms)
+    digitalWrite(LED_VERDE, HIGH); 
+    digitalWrite(LED_ROJO, LOW); 
+    Serial.print("Subiendo al piso ");
+    Serial.println(pisoActual);
+
+    ultimoTiempo = millis(); 
+  }
+}
+</pre>
+
 # Codigo Fuente
 https://onlinegdb.com/fVfVxp6xg
 
