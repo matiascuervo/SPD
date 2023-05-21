@@ -16,6 +16,10 @@ Parcial 1 Sistema de Procesamiento de Datos/MATIAS CUERVO -1B
 * Botón de bajar piso (BOTON_BAJAR): Este botón se utiliza para solicitar al montacargas que baje un piso. Cuando se presiona el botón, se verifica que el montacargas no esté en movimiento y que el piso actual sea mayor a 0. Si se cumplen estas condiciones, el montacargas comienza a bajar al piso anterior
 * Botón de detener (BOTON_DETENER): Este botón se utiliza para detener el montacargas en cualquier momento. Cuando se presiona el botón, se detiene el montacargas y se enciende el LED rojo
 
+# Funcionamiento integral del proyecto  montacargas
+El proyecto del  montacargas consiste en un sistema que permite Subir ,Bajar y o Pausar el montacargas entre diferentes pisos utilizando botones de control. A continuación, se explica el funcionamiento paso a paso:
+* 1.Configuración inicial: En la sección de configuración del código, se definen las conexiones de los componentes, como los pines para los LED y los botones. Además, se inicializan los estados iniciales de variables necesarias para el funcionamiento .
+
 # Codigo Fuente
 https://onlinegdb.com/fVfVxp6xg
 
