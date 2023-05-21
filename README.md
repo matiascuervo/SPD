@@ -59,7 +59,8 @@ void setup()
 </pre>
 
 # Bucle principal
-El programa entra en un bucle principal llamado loop(), que se ejecuta continuamente mientras el Arduino está encendido.
+El Programa Entra En Un Bucle Principal Llamado loop(), Que Se Ejecuta Continuamente Mientras El Arduino Está Encendido.
+En Ella Llamamos a Las Funciones Que Utiliza El Proyecto.
 <pre lang="cpp">
 void loop()
 {
