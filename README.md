@@ -50,9 +50,9 @@ void setup()
   pinMode(SEG_E, OUTPUT);
   pinMode(SEG_F, OUTPUT);
   pinMode(SEG_G, OUTPUT);
-  pinMode(BOTON_SUBIR, INPUT_PULLUP);
-  pinMode(BOTON_DETENER, INPUT_PULLUP);
-  pinMode(BOTON_BAJAR, INPUT_PULLUP);
+  pinMode(BOTON_SUBIR, INPUT);
+  pinMode(BOTON_DETENER, INPUT);
+  pinMode(BOTON_BAJAR, INPUT);
   digitalWrite(LED_ROJO, HIGH);
   Serial.begin(9600);
 }
